@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,15 +11,23 @@
 		6D3594C2244D8E7600D767D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D3594C1244D8E7600D767D1 /* Assets.xcassets */; };
 		6D3594D0244D907900D767D1 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3594CF244D907900D767D1 /* HomePageViewController.swift */; };
 		6D3594D1244D912D00D767D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D3594C3244D8E7600D767D1 /* LaunchScreen.storyboard */; };
+		6D3594D8244EE1CE00D767D1 /* PrivateApiHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3594D7244EE1CE00D767D1 /* PrivateApiHelper.m */; };
+		F995F814B8AF870FE5A6E65A /* Pods_Video_Browser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89BF481E3CA75A31853A4B6 /* Pods_Video_Browser.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D34A992AF022D43E8C6E757 /* Pods-Video Browser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Video Browser.release.xcconfig"; path = "Target Support Files/Pods-Video Browser/Pods-Video Browser.release.xcconfig"; sourceTree = "<group>"; };
 		6D3594B5244D8E7400D767D1 /* Video Browser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Video Browser.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D3594B8244D8E7400D767D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D3594C1244D8E7600D767D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D3594C4244D8E7600D767D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D3594C6244D8E7600D767D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D3594CF244D907900D767D1 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
+		6D3594D5244EE1CE00D767D1 /* Video Browser-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Video Browser-Bridging-Header.h"; sourceTree = "<group>"; };
+		6D3594D6244EE1CE00D767D1 /* PrivateApiHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrivateApiHelper.h; sourceTree = "<group>"; };
+		6D3594D7244EE1CE00D767D1 /* PrivateApiHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateApiHelper.m; sourceTree = "<group>"; };
+		A89BF481E3CA75A31853A4B6 /* Pods_Video_Browser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Video_Browser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA6AF4D446CBFECC92E695BC /* Pods-Video Browser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Video Browser.debug.xcconfig"; path = "Target Support Files/Pods-Video Browser/Pods-Video Browser.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,17 +35,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F995F814B8AF870FE5A6E65A /* Pods_Video_Browser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25C6E588E17E852116A98A21 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A89BF481E3CA75A31853A4B6 /* Pods_Video_Browser.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6D3594AC244D8E7400D767D1 = {
 			isa = PBXGroup;
 			children = (
 				6D3594B7244D8E7400D767D1 /* Video Browser */,
 				6D3594B6244D8E7400D767D1 /* Products */,
+				802F59BA1551B06EB802A753 /* Pods */,
+				25C6E588E17E852116A98A21 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -52,6 +71,8 @@
 		6D3594B7244D8E7400D767D1 /* Video Browser */ = {
 			isa = PBXGroup;
 			children = (
+				6D3594D9244EE41A00D767D1 /* Home */,
+				6D3594D4244EE15500D767D1 /* Utils */,
 				6D3594D3244D9FAB00D767D1 /* History */,
 				6D3594CC244D904300D767D1 /* Browser */,
 				6D3594CD244D904A00D767D1 /* Bookmarks */,
@@ -64,7 +85,6 @@
 		6D3594CC244D904300D767D1 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
-				6D3594CF244D907900D767D1 /* HomePageViewController.swift */,
 			);
 			path = Browser;
 			sourceTree = "<group>";
@@ -101,6 +121,33 @@
 			path = History;
 			sourceTree = "<group>";
 		};
+		6D3594D4244EE15500D767D1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				6D3594D6244EE1CE00D767D1 /* PrivateApiHelper.h */,
+				6D3594D7244EE1CE00D767D1 /* PrivateApiHelper.m */,
+				6D3594D5244EE1CE00D767D1 /* Video Browser-Bridging-Header.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		6D3594D9244EE41A00D767D1 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				6D3594CF244D907900D767D1 /* HomePageViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		802F59BA1551B06EB802A753 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EA6AF4D446CBFECC92E695BC /* Pods-Video Browser.debug.xcconfig */,
+				2D34A992AF022D43E8C6E757 /* Pods-Video Browser.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -108,9 +155,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D3594C9244D8E7600D767D1 /* Build configuration list for PBXNativeTarget "Video Browser" */;
 			buildPhases = (
+				9DFE0FDCBECCAC848AA7C2BD /* [CP] Check Pods Manifest.lock */,
 				6D3594B1244D8E7400D767D1 /* Sources */,
 				6D3594B2244D8E7400D767D1 /* Frameworks */,
 				6D3594B3244D8E7400D767D1 /* Resources */,
+				CBD98962B183C1859CC1BED6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,6 +182,7 @@
 				TargetAttributes = {
 					6D3594B4244D8E7400D767D1 = {
 						CreatedOnToolsVersion = 11.4;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -166,11 +216,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9DFE0FDCBECCAC848AA7C2BD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Video Browser-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBD98962B183C1859CC1BED6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Video Browser/Pods-Video Browser-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Video Browser/Pods-Video Browser-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Video Browser/Pods-Video Browser-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6D3594B1244D8E7400D767D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D3594D8244EE1CE00D767D1 /* PrivateApiHelper.m in Sources */,
 				6D3594B9244D8E7400D767D1 /* AppDelegate.swift in Sources */,
 				6D3594D0244D907900D767D1 /* HomePageViewController.swift in Sources */,
 			);
@@ -240,7 +333,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -294,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -306,8 +399,10 @@
 		};
 		6D3594CA244D8E7600D767D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA6AF4D446CBFECC92E695BC /* Pods-Video Browser.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D98TJ9H5N8;
 				INFOPLIST_FILE = "Video Browser/Resource/Info.plist";
@@ -317,6 +412,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mayc.Video-Browser";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Video Browser/Utils/Video Browser-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -324,8 +421,10 @@
 		};
 		6D3594CB244D8E7600D767D1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D34A992AF022D43E8C6E757 /* Pods-Video Browser.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D98TJ9H5N8;
 				INFOPLIST_FILE = "Video Browser/Resource/Info.plist";
@@ -335,6 +434,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mayc.Video-Browser";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Video Browser/Utils/Video Browser-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

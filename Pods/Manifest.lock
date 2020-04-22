@@ -1,0 +1,32 @@
+PODS:
+  - Alamofire (5.1.0)
+  - Kingfisher (5.13.3):
+    - Kingfisher/Core (= 5.13.3)
+  - Kingfisher/Core (5.13.3)
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - SnapKit (5.0.1)
+
+DEPENDENCIES:
+  - Kingfisher (~> 5.0)
+  - Moya (~> 14.0)
+  - SnapKit (~> 5.0.0)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Kingfisher
+    - Moya
+    - SnapKit
+
+SPEC CHECKSUMS:
+  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
+  Kingfisher: d2b3d6a7200c93b34de9afcdf25c8dd9282ec277
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+
+PODFILE CHECKSUM: 90b5de721738e38bef6153e249a8d03be082b7a6
+
+COCOAPODS: 1.8.4
