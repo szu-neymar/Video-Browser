@@ -8,5 +8,6 @@ target 'Video Browser' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'Kingfisher', '~> 5.0'
   pod 'Moya', '~> 14.0'
+  pod 'JXSegmentedView', '~> 1.0.6'
 
 end

@@ -1,8 +1,9 @@
 PODS:
   - Alamofire (5.1.0)
-  - Kingfisher (5.13.3):
-    - Kingfisher/Core (= 5.13.3)
-  - Kingfisher/Core (5.13.3)
+  - JXSegmentedView (1.0.6)
+  - Kingfisher (5.13.4):
+    - Kingfisher/Core (= 5.13.4)
+  - Kingfisher/Core (5.13.4)
   - Moya (14.0.0):
     - Moya/Core (= 14.0.0)
   - Moya/Core (14.0.0):
@@ -10,6 +11,7 @@ PODS:
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
+  - JXSegmentedView (~> 1.0.6)
   - Kingfisher (~> 5.0)
   - Moya (~> 14.0)
   - SnapKit (~> 5.0.0)
@@ -17,16 +19,18 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - JXSegmentedView
     - Kingfisher
     - Moya
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
-  Kingfisher: d2b3d6a7200c93b34de9afcdf25c8dd9282ec277
+  JXSegmentedView: ceb6fb3a12716408bcd5c4210b93d947d079de25
+  Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 90b5de721738e38bef6153e249a8d03be082b7a6
+PODFILE CHECKSUM: 49c0c6b83a6efe162f4e5ea0a3b4ec955622c5ec
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.8.3
