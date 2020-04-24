@@ -26,8 +26,12 @@ class HomePageViewController: UIViewController {
         configTabBar()
         configSegmentedView()
         
+//        let rule = ".figures_list&&li;.figure_title&&Text;.figure&&style;.mask_txt&&Text!更新至;a&&href"
+//        let urlString = "http://www.81ju.cn/?m=vod-type-id-1.html"
+        
         let rule = "body&&.movie-item;.movie-name&&Text;img&&src;span,0&&Text!-;a&&href"
         let urlString = "http://www.k2938.com/type/1/1.html"
+
         
         let movies = Parser.getMovies(from: urlString, rule: rule)
         print(movies)

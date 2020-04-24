@@ -46,7 +46,8 @@ struct Parser {
                 }
                 // imageUrl
                 if let imageSelectors = selector.imageSelectors {
-                    movie.imageURL = getContent(from: item, selectors: imageSelectors)
+                    let content = getContent(from: item, selectors: imageSelectors)
+                    movie.imageURL = getRealImageUrl(from: content)
                 }
                 // desc
                 if let descSelectors = selector.descSelectors {
@@ -66,6 +67,7 @@ struct Parser {
         return movies
     }
     
+    // MARK: - Private
     private static func getContent(from item: Element, selectors: [String]) -> String? {
         var content: String?
         do {
@@ -105,6 +107,16 @@ struct Parser {
         } catch {
             print("cannot get content")
         }
+        return content
+    }
+    
+    private static func getRealImageUrl(from content: String?) -> String? {
+        if let originContent = content, originContent.contains("background-image: url") {
+            if let start = originContent.firstIndex(of: "("), let end = originContent.lastIndex(of: ")") {
+                return String(originContent[originContent.index(start, offsetBy: 1)..<end])
+            }
+        }
+        
         return content
     }
     
