@@ -53,6 +53,6 @@ extension HomePageViewController: JXSegmentedListContainerViewDataSource {
     }
     
     func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        return ListBaseViewController()
+        return MovieListViewController()
     }
 }

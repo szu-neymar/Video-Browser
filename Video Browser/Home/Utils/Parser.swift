@@ -11,7 +11,7 @@ import SwiftSoup
 
 struct Parser {
     
-    static func getMovies(from urlString: String, rule: String) -> [MovieInfo] {
+    static func getMovies(from urlString: String, rule: String, baseUrl: String = "") -> [MovieInfo] {
         var movies: [MovieInfo] = []
         movies = []
         guard let url = URL(string: urlString) else {
@@ -47,7 +47,8 @@ struct Parser {
                 // imageUrl
                 if let imageSelectors = selector.imageSelectors {
                     let content = getContent(from: item, selectors: imageSelectors)
-                    movie.imageURL = getRealImageUrl(from: content)
+                    let imageURL = getImageUrl(from: content)
+                    movie.imageURL = getRealUrl(from: imageURL, baseUrl: baseUrl)
                 }
                 // desc
                 if let descSelectors = selector.descSelectors {
@@ -55,9 +56,9 @@ struct Parser {
                 }
                 // href
                 if let hrefSelectors = selector.hrefSelectors {
-                    movie.href = getContent(from: item, selectors: hrefSelectors)
+                    let href = getContent(from: item, selectors: hrefSelectors)
+                    movie.href = getRealUrl(from: href, baseUrl: baseUrl)
                 }
-                print(movie)
                 movies.append(movie)
             }
 
@@ -110,7 +111,7 @@ struct Parser {
         return content
     }
     
-    private static func getRealImageUrl(from content: String?) -> String? {
+    private static func getImageUrl(from content: String?) -> String? {
         if let originContent = content, originContent.contains("background-image: url") {
             if let start = originContent.firstIndex(of: "("), let end = originContent.lastIndex(of: ")") {
                 return String(originContent[originContent.index(start, offsetBy: 1)..<end])
@@ -118,6 +119,14 @@ struct Parser {
         }
         
         return content
+    }
+    
+    private static func getRealUrl(from urlString: String?, baseUrl: String) -> String? {
+        guard let urlStr = urlString, let url = URL(string: urlStr) else { return nil }
+        if url.scheme == nil && url.host == nil {
+            return baseUrl + urlStr
+        }
+        return urlStr
     }
     
 }
