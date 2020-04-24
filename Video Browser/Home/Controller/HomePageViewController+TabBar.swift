@@ -48,6 +48,13 @@ extension HomePageViewController: HomeTabBarDelegate {
     func homeTabBar(_: HomeTabBar, didSelectedAt index: Int) {
         guard let type = HomePageTabBarItemType(rawValue: index) else { return }
         print(type)
+        if type == .renctPages {
+            navigationController?.pushViewController(HomePageViewController(), animated: true)
+        } else if (type == .menu) {
+            if let count = navigationController?.viewControllers.count, count > 1 {
+                navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
 }

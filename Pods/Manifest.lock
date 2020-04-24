@@ -9,12 +9,14 @@ PODS:
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
   - SnapKit (5.0.1)
+  - SwiftSoup (2.3.1)
 
 DEPENDENCIES:
   - JXSegmentedView (~> 1.0.6)
   - Kingfisher (~> 5.0)
   - Moya (~> 14.0)
   - SnapKit (~> 5.0.0)
+  - SwiftSoup
 
 SPEC REPOS:
   trunk:
@@ -23,6 +25,7 @@ SPEC REPOS:
     - Kingfisher
     - Moya
     - SnapKit
+    - SwiftSoup
 
 SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
@@ -30,7 +33,8 @@ SPEC CHECKSUMS:
   Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftSoup: e5af192bc99be8398d5f93e15ff6a3c80ba81de1
 
-PODFILE CHECKSUM: 49c0c6b83a6efe162f4e5ea0a3b4ec955622c5ec
+PODFILE CHECKSUM: 2d1b4ea8efbdc55ca090426a25c18b11846f33b2
 
 COCOAPODS: 1.8.3

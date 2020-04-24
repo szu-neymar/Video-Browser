@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import JXSegmentedView
+import SwiftSoup
 
 class HomePageViewController: UIViewController {
     
@@ -23,7 +24,13 @@ class HomePageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         configTabBar()
-        configsegmentedView()
+        configSegmentedView()
+        
+        let rule = "body&&.movie-item;.movie-name&&Text;img&&src;span,0&&Text!-;a&&href"
+        let urlString = "http://www.k2938.com/type/1/1.html"
+        
+        let movies = Parser.getMovies(from: urlString, rule: rule)
+        print(movies)
     }
     
     override func viewWillAppear(_ animated: Bool) {

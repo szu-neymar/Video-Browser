@@ -11,7 +11,7 @@ import JXSegmentedView
 
 extension HomePageViewController: JXSegmentedListContainerViewDataSource {
     
-    func configsegmentedView() {
+    func configSegmentedView() {
         let titles = ["首页", "视频", "腾讯视频", "爱奇艺", "芒果TV", "优酷视频", "爱土豆", "抖音", "快手"]
         segmentedDataSource = JXSegmentedTitleDataSource()
         segmentedDataSource?.isTitleColorGradientEnabled = true
