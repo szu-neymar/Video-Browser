@@ -9,63 +9,72 @@
 import Foundation
 import SwiftSoup
 
+typealias ParseMovieComplete =  (_ movies: [MovieInfo]) -> Void
+
 struct Parser {
     
-    static func getMovies(from urlString: String, rule: String, baseUrl: String = "") -> [MovieInfo] {
+    static func getMovies(from urlString: String,
+                                    rule: String,
+                                 baseUrl: String = "",
+                                complete: @escaping ParseMovieComplete) {
         var movies: [MovieInfo] = []
         movies = []
         guard let url = URL(string: urlString) else {
             print("\(urlString) is not a url")
-            return movies
+            return
         }
         
         let selector = MovieInfoSelector(string: rule)
         
-        do {
-            let html = try String(contentsOf: url, encoding: .utf8)
-            let doc = try SwiftSoup.parse(html)
-            
-            // list
-            guard let listSelectors = selector.listSelectors else { return movies }
-            var movieElements: Elements?
-            for (index, selector) in listSelectors.enumerated() {
-                if (index == 0) {
-                    movieElements = try doc.select(selector)
-                } else {
-                    movieElements = try movieElements!.select(selector)
+        DispatchQueue.global().async {
+            do {
+                let html = try String(contentsOf: url, encoding: .utf8)
+                let doc = try SwiftSoup.parse(html)
+                
+                // list
+                guard let listSelectors = selector.listSelectors else { return }
+                var movieElements: Elements?
+                for (index, selector) in listSelectors.enumerated() {
+                    if (index == 0) {
+                        movieElements = try doc.select(selector)
+                    } else {
+                        movieElements = try movieElements!.select(selector)
+                    }
                 }
-            }
-            guard let items = movieElements else { return movies }
-            
-            // Movie info
-            for item in items {
-                var movie = MovieInfo()
-                // title
-                if let titleSelectors = selector.titleSelectors {
-                    movie.title = getContent(from: item, selectors: titleSelectors)
+                guard let items = movieElements else { return }
+                
+                // Movie info
+                for item in items {
+                    var movie = MovieInfo()
+                    // title
+                    if let titleSelectors = selector.titleSelectors {
+                        movie.title = getContent(from: item, selectors: titleSelectors)
+                    }
+                    // imageUrl
+                    if let imageSelectors = selector.imageSelectors {
+                        let content = getContent(from: item, selectors: imageSelectors)
+                        let imageURL = getImageUrl(from: content)
+                        movie.imageURL = getRealUrl(from: imageURL, baseUrl: baseUrl)
+                    }
+                    // desc
+                    if let descSelectors = selector.descSelectors {
+                        movie.description = getContent(from: item, selectors: descSelectors)
+                    }
+                    // href
+                    if let hrefSelectors = selector.hrefSelectors {
+                        let href = getContent(from: item, selectors: hrefSelectors)
+                        movie.href = getRealUrl(from: href, baseUrl: baseUrl)
+                    }
+                    movies.append(movie)
                 }
-                // imageUrl
-                if let imageSelectors = selector.imageSelectors {
-                    let content = getContent(from: item, selectors: imageSelectors)
-                    let imageURL = getImageUrl(from: content)
-                    movie.imageURL = getRealUrl(from: imageURL, baseUrl: baseUrl)
+                DispatchQueue.main.async {
+                    complete(movies)
                 }
-                // desc
-                if let descSelectors = selector.descSelectors {
-                    movie.description = getContent(from: item, selectors: descSelectors)
-                }
-                // href
-                if let hrefSelectors = selector.hrefSelectors {
-                    let href = getContent(from: item, selectors: hrefSelectors)
-                    movie.href = getRealUrl(from: href, baseUrl: baseUrl)
-                }
-                movies.append(movie)
-            }
 
-        } catch {
-           print("解析失败")
+            } catch {
+               print("解析失败")
+            }
         }
-        return movies
     }
     
     // MARK: - Private

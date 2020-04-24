@@ -11,6 +11,8 @@ import Kingfisher
 
 class MovieInfoCell: UICollectionViewCell {
     
+    var movieInfo: MovieInfo?
+    
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -21,8 +23,9 @@ class MovieInfoCell: UICollectionViewCell {
     
     lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFont(ofSize: 12)
+        titleLabel.font = UIFont.systemFont(ofSize: 15)
         titleLabel.textColor = .black
+        titleLabel.textAlignment = .center
         return titleLabel
     }()
     
@@ -30,8 +33,9 @@ class MovieInfoCell: UICollectionViewCell {
         let descLabel = UILabel()
         descLabel.backgroundColor = .gray
         descLabel.textColor = .white
-        descLabel.font = UIFont.systemFont(ofSize: 10)
+        descLabel.font = UIFont.systemFont(ofSize: 12)
         descLabel.clipsToBounds = true
+        descLabel.textAlignment = .center
         return descLabel
     }()
     
@@ -43,7 +47,7 @@ class MovieInfoCell: UICollectionViewCell {
         
         imageView.snp.makeConstraints { (make) in
             make.leading.trailing.top.equalToSuperview()
-            make.height.equalTo(self.snp.width).multipliedBy(16 / 9.0)
+            make.height.equalTo(self.snp.width).multipliedBy(4 / 3.0)
         }
         
         descLabel.snp.makeConstraints { (make) in
@@ -62,6 +66,7 @@ class MovieInfoCell: UICollectionViewCell {
     }
     
     func config(with movieInfo: MovieInfo) {
+        self.movieInfo = movieInfo
         titleLabel.text = movieInfo.title
         descLabel.text = movieInfo.description
         if let urlString = movieInfo.imageURL, let url = URL(string: urlString) {

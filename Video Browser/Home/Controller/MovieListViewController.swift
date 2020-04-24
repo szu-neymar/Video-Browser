@@ -17,7 +17,6 @@ class MovieListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: CGFloat(arc4random()%255)/255, green: CGFloat(arc4random()%255)/255, blue: CGFloat(arc4random()%255)/255, alpha: 1)
         configCollectionView()
         loadMovieList()
     }
@@ -26,12 +25,10 @@ class MovieListViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let screenWidth = UIScreen.main.bounds.width
         let itemWidth = (screenWidth - 4 * 10) / 3.0
-        let itemHeight = itemWidth * 16.0 / 9.0 + 30
+        let itemHeight = itemWidth * 4.0 / 3.0 + 30
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
         
         movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         movieCollectionView.backgroundColor = .white
@@ -41,17 +38,20 @@ class MovieListViewController: UIViewController {
         movieCollectionView.register(MovieInfoCell.self, forCellWithReuseIdentifier: NSStringFromClass(MovieInfoCell.self))
         
         view.addSubview(movieCollectionView)
-        movieCollectionView.frame = view.bounds
+        movieCollectionView.snp.makeConstraints { (make) in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        }
     }
     
     private func loadMovieList() {
         let rule = "body&&.movie-item;.movie-name&&Text;img&&src;span,0&&Text!- ;a&&href"
         let urlString = "http://www.k2938.com/type/1/1.html"
 
+        Parser.getMovies(from: urlString, rule: rule, baseUrl: "http://www.k2938.com") { (movies) in
+            self.movieInfos = movies
+            self.movieCollectionView.reloadSections([0])
+        }
         
-        let movies = Parser.getMovies(from: urlString, rule: rule, baseUrl: "http://www.k2938.com")
-        movieInfos = movies
-        movieCollectionView.reloadData()
     }
 
 }
