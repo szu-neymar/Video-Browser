@@ -44,10 +44,10 @@ class MovieListViewController: UIViewController {
     }
     
     private func loadMovieList() {
-        let rule = "body&&.movie-item;.movie-name&&Text;img&&src;span,0&&Text!- ;a&&href"
-        let urlString = "http://www.k2938.com/type/1/1.html"
+        let rule = ".figures_list&&li;.figure_title&&Text;.figure&&style;.mask_txt&&Text!更新至;a&&href"
+        let urlString = "http://www.81ju.cn/?m=vod-type-id-1.html"
 
-        Parser.getMovies(from: urlString, rule: rule, baseUrl: "http://www.k2938.com") { (movies) in
+        Parser.getMovies(from: urlString, rule: rule, baseUrl: "http://www.81ju.cn") { (movies) in
             self.movieInfos = movies
             self.movieCollectionView.reloadSections([0])
         }
@@ -67,6 +67,15 @@ extension MovieListViewController: UICollectionViewDataSource, UICollectionViewD
             return cell
         }
         return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? MovieInfoCell,
+            let movie = cell.movieInfo, let href = movie.href {
+            let browserController = BrowserViewController()
+            navigationController?.pushViewController(browserController, animated: true)
+            browserController.load(urlString: href)
+        }
     }
     
     
