@@ -53,6 +53,30 @@ extension HomePageViewController: JXSegmentedListContainerViewDataSource {
     }
     
     func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        return MovieListViewController()
+        let movieListController = MovieListViewController()
+
+        switch index {
+        case 0:
+            movieListController.rule = ".stui-vodlist&&li;.title&&Text;a&&data-original;.pic-text&&Text;a&&href"
+            movieListController.urlString = "http://huubaa.com/lists/2_2.html"
+            movieListController.baseUrl = "http://huubaa.com"
+        case 1:
+            movieListController.rule = ".tubiao&&.zu;a,1&&Text;img&&src;.kebo&&Text;a&&href"
+            movieListController.urlString = "https://www.laodouban.com/dianshiju/0"
+            movieListController.baseUrl = "https://www.laodouban.com"
+        case 2:
+            movieListController.urlString = "https://www.shenma4480.com/type/dianying-0/"
+            movieListController.baseUrl = "https://www.shenma4480.com"
+            movieListController.rule = "body&&.stui-vodlist__item;a&&title;a&&mip-img&&src;.pic-text&&Text;a&&href"
+        case 3:
+            movieListController.urlString = "https://www.novipnoad.com/movie/page/0"
+            movieListController.baseUrl = "https://www.novipnoad.com"
+            movieListController.rule = ".post_ajax_tm&&.row&&.col-md-3;.item-head&&a&&Text;img&&data-original;.item-content&&Text;.item-thumbnail&&a&&href"
+        default:
+            movieListController.rule = ".figures_list&&li;.figure_title&&Text;.figure&&style;.mask_txt&&Text!更新至;a&&href"
+            movieListController.urlString =  "http://www.81ju.cn/?m=vod-type-id-1.html"
+            movieListController.baseUrl = "http://www.81ju.cn"
+        }
+        return movieListController
     }
 }

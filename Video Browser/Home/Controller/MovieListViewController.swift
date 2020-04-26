@@ -14,6 +14,10 @@ class MovieListViewController: UIViewController {
     var movieCollectionView: UICollectionView!
     
     var movieInfos: [MovieInfo] = []
+    
+    var rule: String!
+    var urlString: String!
+    var baseUrl: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +48,8 @@ class MovieListViewController: UIViewController {
     }
     
     private func loadMovieList() {
-        let rule = ".figures_list&&li;.figure_title&&Text;.figure&&style;.mask_txt&&Text!更新至;a&&href"
-        let urlString = "http://www.81ju.cn/?m=vod-type-id-1.html"
 
-        Parser.getMovies(from: urlString, rule: rule, baseUrl: "http://www.81ju.cn") { (movies) in
+        Parser.getMovies(from: urlString, rule: rule, baseUrl: baseUrl) { (movies) in
             self.movieInfos = movies
             self.movieCollectionView.reloadSections([0])
         }
@@ -72,9 +74,8 @@ extension MovieListViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? MovieInfoCell,
             let movie = cell.movieInfo, let href = movie.href {
-            let browserController = BrowserViewController()
+            let browserController = BrowserViewController(urlString: href)
             navigationController?.pushViewController(browserController, animated: true)
-            browserController.load(urlString: href)
         }
     }
     

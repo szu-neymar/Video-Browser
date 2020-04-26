@@ -10,15 +10,31 @@ import UIKit
 import WebKit
 
 class BrowserViewController: UIViewController {
-    
+        
     let tabBar: BrowserTabBar = BrowserTabBar()
-    let webView: WKWebView = WKWebView()
+    var webView: WKWebView!
+    var urlString: String?
 
+    convenience init(urlString: String?) {
+        self.init(nibName: nil, bundle: nil)
+        self.urlString = urlString
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        URLProtocol.registerClass(WKSniffer.self)
         initSubviews()
+        if let url = urlString {
+            load(urlString: url)
+        }
     }
     
     deinit {
@@ -26,9 +42,15 @@ class BrowserViewController: UIViewController {
     }
     
     private func initSubviews() {
+        let configuration = WKWebViewConfiguration()
+//        if #available(iOS 10.0, *) {
+//           configuration.mediaTypesRequiringUserActionForPlayback = []
+//        }
+//        configuration.allowsInlineMediaPlayback = true
+        webView = WKWebView(frame: .zero, configuration: configuration)
+        
         view.addSubview(tabBar)
         view.addSubview(webView)
-        
         
         tabBar.delegate = self
         tabBar.snp.makeConstraints { (make) in
@@ -36,6 +58,8 @@ class BrowserViewController: UIViewController {
             make.height.equalTo(49 + 34)
         }
         
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
         webView.snp.makeConstraints { (make) in
             make.width.leading.equalToSuperview()
             make.top.equalTo(44)

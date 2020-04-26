@@ -104,6 +104,20 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		385F308A24541FE40024377B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		385F308B245497DA0024377B /* Util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		6D3594AC244D8E7400D767D1 = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +154,8 @@
 		6D3594CC244D904300D767D1 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				385F308B245497DA0024377B /* Util */,
+				385F308A24541FE40024377B /* Model */,
 				385F307D24532A170024377B /* View */,
 				385F307C24532A100024377B /* Controller */,
 			);
@@ -181,6 +197,7 @@
 		6D3594D4244EE15500D767D1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6DCBC10A2452B2C200DFB229 /* Parser.swift */,
 				6D3594D6244EE1CE00D767D1 /* PrivateApiHelper.h */,
 				6D3594D7244EE1CE00D767D1 /* PrivateApiHelper.m */,
 				6D3594D5244EE1CE00D767D1 /* Video Browser-Bridging-Header.h */,
@@ -192,7 +209,6 @@
 		6D3594D9244EE41A00D767D1 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				6DCBC1092452B29A00DFB229 /* Utils */,
 				6D3594E024501B5000D767D1 /* Controller */,
 				6D3594DF24501B4A00D767D1 /* Model */,
 				6D3594DE24501B3F00D767D1 /* View */,
@@ -227,14 +243,6 @@
 				6DE739AF2452EB0800825391 /* MovieListViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		6DCBC1092452B29A00DFB229 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				6DCBC10A2452B2C200DFB229 /* Parser.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		802F59BA1551B06EB802A753 /* Pods */ = {
