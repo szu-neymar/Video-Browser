@@ -74,7 +74,7 @@ extension MovieListViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? MovieInfoCell,
             let movie = cell.movieInfo, let href = movie.href {
-            let browserController = BrowserViewController(urlString: href)
+            let browserController = WebBrowser(urlString: href)
             navigationController?.pushViewController(browserController, animated: true)
         }
     }

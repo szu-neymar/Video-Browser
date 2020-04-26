@@ -30,6 +30,7 @@ class BrowserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        URLProtocol.registerClass(WKSniffer.self)
         view.backgroundColor = .white
         initSubviews()
         if let url = urlString {

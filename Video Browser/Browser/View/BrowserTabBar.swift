@@ -28,6 +28,15 @@ class BrowserTabBar: UIView {
     
     weak var delegate: BrowserTabBarDelegate?
     
+    var searchItemTitle: String? {
+        get {
+            return searchButton.title(for: .normal)
+        }
+        set {
+            searchButton.setTitle(newValue, for: .normal)
+        }
+    }
+    
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "tab_back"), for: .normal)
