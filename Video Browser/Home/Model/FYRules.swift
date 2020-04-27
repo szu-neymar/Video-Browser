@@ -11,6 +11,7 @@ import Foundation
 enum FYRuleType: String {
     case home = "￥home_rule￥"
     case homeURL = "￥home_rule_url￥"
+    case source = "￥source￥"
 }
 
 // MARK: - FYHomeRule 首页规则
@@ -19,8 +20,13 @@ enum FYURLField: String {
     case type = "fyclass"
     case year = "fyyear"
     case area = "fyarea"
-    case page = "fypage"
+    
     case all = "fyAll"
+    
+    enum Other: String {
+        case page = "fypage"
+        case firstPage
+    }
 }
 
 enum FYListStyle: String {
@@ -45,12 +51,12 @@ struct FYHomeRule {
     var channelURL: String?
     var listStyle: FYListStyle
     
-    var videoClasses: String?
-    var videoClassesReplace: String?
-    var videoAreas: String?
-    var videoAreasReplace: String?
-    var videoYears: String?
-    var videoYearsReplace: String?
+    var videoClasses: [String]?
+    var videoClassesReplace: [String]?
+    var videoAreas: [String]?
+    var videoAreasReplace: [String]?
+    var videoYears: [String]?
+    var videoYearsReplace: [String]?
     
     var htmlParseRule: String?
     var searchUrl: String?

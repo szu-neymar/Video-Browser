@@ -28,6 +28,14 @@ class HomeTabBar: UIView {
             make.bottom.equalToSuperview().offset(-34)
         }
         
+        let line = UIView()
+        line.backgroundColor = .lightGray
+        addSubview(line)
+        line.snp.makeConstraints { (make) in
+            make.leading.top.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
+        }
+        
         items = images.map({ (image) -> UIButton in
             let button = UIButton()
             button.setImage(image, for: .normal)

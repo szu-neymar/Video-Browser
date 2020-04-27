@@ -37,6 +37,14 @@ extension HomePageViewController: JXSegmentedListContainerViewDataSource {
             make.height.equalTo(40)
         }
         
+        let line = UIView()
+        line.backgroundColor = .lightGray
+        segmentedView.addSubview(line)
+        line.snp.makeConstraints { (make) in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
+        }
+        
         listContainerView.snp.makeConstraints { (make) in
             make.leading.width.equalToSuperview()
             make.top.equalTo(segmentedView.snp.bottom)
@@ -58,7 +66,7 @@ extension HomePageViewController: JXSegmentedListContainerViewDataSource {
         switch index {
         case 0:
             movieListController.rule = ".stui-vodlist&&li;.title&&Text;a&&data-original;.pic-text&&Text;a&&href"
-            movieListController.urlString = "http://huubaa.com/lists/2_2.html"
+            movieListController.urlString = "http://huubaa.com/lists/2_fypage.html[firstPage=http://huubaa.com/lists/2_1.html]"
             movieListController.baseUrl = "http://huubaa.com"
         case 1:
             movieListController.rule = ".tubiao&&.zu;a,1&&Text;img&&src;.kebo&&Text;a&&href"

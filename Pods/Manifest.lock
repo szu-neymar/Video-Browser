@@ -4,6 +4,7 @@ PODS:
   - Kingfisher (5.13.4):
     - Kingfisher/Core (= 5.13.4)
   - Kingfisher/Core (5.13.4)
+  - MJRefresh (3.4.1)
   - Moya (14.0.0):
     - Moya/Core (= 14.0.0)
   - Moya/Core (14.0.0):
@@ -21,6 +22,7 @@ PODS:
 DEPENDENCIES:
   - JXSegmentedView (~> 1.0.6)
   - Kingfisher (~> 5.0)
+  - MJRefresh
   - Moya (~> 14.0)
   - SnapKit (~> 5.0.0)
   - SwiftSoup
@@ -33,6 +35,7 @@ SPEC REPOS:
     - Alamofire
     - JXSegmentedView
     - Kingfisher
+    - MJRefresh
     - Moya
     - SnapKit
     - SwiftSoup
@@ -42,11 +45,12 @@ SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   JXSegmentedView: ceb6fb3a12716408bcd5c4210b93d947d079de25
   Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
+  MJRefresh: 3153c59a363159092c08b2177ec3a7d09f90bfaf
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftSoup: e5af192bc99be8398d5f93e15ff6a3c80ba81de1
   ZFPlayer: 8a6021a3c45e281f2abd24dca5c88915af770a7e
 
-PODFILE CHECKSUM: 3b51f8c0b329536367ff6e1b1946634c22ca17fe
+PODFILE CHECKSUM: d19f9bdf9d6612e622a16250943c7743e437c6b9
 
 COCOAPODS: 1.8.3

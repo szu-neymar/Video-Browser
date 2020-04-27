@@ -8,21 +8,22 @@
 
 import UIKit
 import JXSegmentedView
+import MJRefresh
 
 class MovieListViewController: UIViewController {
     
-    var movieCollectionView: UICollectionView!
+    private var movieCollectionView: UICollectionView!
     
-    var movieInfos: [MovieInfo] = []
+    private var movieInfos: [MovieInfo] = []    // 视频列表
+    private var currentPage = 1     // 最新加载的页码
     
-    var rule: String!
-    var urlString: String!
-    var baseUrl: String!
+    var rule: String = ""
+    var urlString: String = ""
+    var baseUrl: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configCollectionView()
-        loadMovieList()
     }
     
     private func configCollectionView() {
@@ -31,7 +32,8 @@ class MovieListViewController: UIViewController {
         let itemWidth = (screenWidth - 4 * 10) / 3.0
         let itemHeight = itemWidth * 4.0 / 3.0 + 30
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 95)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 10, right: 10)
         layout.scrollDirection = .vertical
         
         movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -40,20 +42,66 @@ class MovieListViewController: UIViewController {
         movieCollectionView.dataSource = self
         
         movieCollectionView.register(MovieInfoCell.self, forCellWithReuseIdentifier: NSStringFromClass(MovieInfoCell.self))
+        movieCollectionView.register(MovieListHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NSStringFromClass(MovieListHeader.self))
         
         view.addSubview(movieCollectionView)
         movieCollectionView.snp.makeConstraints { (make) in
             make.leading.trailing.top.bottom.equalToSuperview()
         }
+        
+        let mjHeader = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadFirstPage))
+        mjHeader.lastUpdatedTimeLabel?.isHidden = true
+        mjHeader.stateLabel?.isHidden = true
+        movieCollectionView.mj_header = mjHeader
+        movieCollectionView.mj_header?.beginRefreshing()
     }
     
-    private func loadMovieList() {
-
-        Parser.getMovies(from: urlString, rule: rule, baseUrl: baseUrl) { (movies) in
-            self.movieInfos = movies
-            self.movieCollectionView.reloadSections([0])
+    @objc private func loadFirstPage() {
+        Parser.getMovies(from: urlString.firstPageUrl, rule: rule, baseUrl: baseUrl) { (result) in
+            self.movieCollectionView.mj_header?.endRefreshing()
+            switch result {
+            case .success(let movies):
+                if movies.count > 0 {
+                    self.movieInfos = movies
+                    // 有些网页页码索引从 1 开始，对这种情况做一个简单兼容
+                    if self.urlString.firstPageUrl.elementsEqual(self.urlString.url(ofPage: 1)) {
+                        self.currentPage = 1
+                    } else {
+                        self.currentPage = 0
+                    }
+                    self.movieCollectionView.reloadData()
+                    self.configFooterIfNeed()
+                }
+            case .failure(let error):
+                self.movieCollectionView.mj_footer = nil
+                print(error.desc)
+            }
         }
-        
+    }
+    
+    @objc private func loadMore() {
+        currentPage += 1
+        Parser.getMovies(from: urlString.url(ofPage: currentPage), rule: rule, baseUrl: baseUrl) { (result) in
+            switch result {
+            case .success(let movies):
+                if movies.count > 0 {
+                    self.movieInfos.append(contentsOf: movies)
+                    self.movieCollectionView.reloadData()
+                    self.movieCollectionView.mj_footer?.endRefreshing()
+                }
+            case .failure(let error):
+                self.movieCollectionView.mj_footer?.endRefreshingWithNoMoreData()
+                print(error.desc)
+            }
+        }
+    }
+    
+    private func configFooterIfNeed() {
+        if urlString.canLoadMorePage {
+            let footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(self.loadMore))
+            footer.isRefreshingTitleHidden = true
+            self.movieCollectionView.mj_footer = footer
+        }
     }
 
 }
@@ -79,6 +127,26 @@ extension MovieListViewController: UICollectionViewDataSource, UICollectionViewD
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader{
+            if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: NSStringFromClass(MovieListHeader.self), for: indexPath) as? MovieListHeader {
+                header.delegate = self
+                let titles1 = ["综合排序", "热播榜", "新上线"]
+                let titles2 = ["全部地区", "内地", "香港地区", "韩国", "美剧", "日本", "越南"]
+                let titles3 = ["2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012"]
+                header.config(with: [titles1, titles2, titles3], allowMultiSelect: true)
+                return header
+            }
+        }
+        return UICollectionReusableView()
+    }
+    
+}
+
+extension MovieListViewController: MovieListHeaderDelegate {
+    func movieListHeader(_: MovieListHeader, selctedAt row: Int, index: Int) {
+        
+    }
     
 }
 

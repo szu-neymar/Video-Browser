@@ -9,7 +9,21 @@
 import Foundation
 import SwiftSoup
 
-typealias ParseMovieComplete =  (_ movies: [MovieInfo]) -> Void
+enum ParseError: Error {
+    case parseFailed
+    case noData
+    
+    var desc: String {
+        switch self {
+        case .parseFailed:
+            return "解析失败"
+        case .noData:
+            return "无数据"
+        }
+    }
+}
+
+typealias ParseMovieComplete =  (Result<[MovieInfo], ParseError>) -> Void
 
 struct Parser {
     
@@ -21,7 +35,7 @@ struct Parser {
         movies = []
         guard let url = URL(string: urlString) else {
             print("\(urlString) is not a url")
-            return
+            return complete(.failure(.parseFailed))
         }
         
         let selector = MovieInfoSelector(string: rule)
@@ -32,7 +46,7 @@ struct Parser {
                 let doc = try SwiftSoup.parse(html)
                 
                 // list
-                guard let listSelectors = selector.listSelectors else { return }
+                guard let listSelectors = selector.listSelectors else { return complete(.failure(.noData)) }
                 var movieElements: Elements?
                 for (index, selector) in listSelectors.enumerated() {
                     if (index == 0) {
@@ -41,7 +55,7 @@ struct Parser {
                         movieElements = try movieElements!.select(selector)
                     }
                 }
-                guard let items = movieElements else { return }
+                guard let items = movieElements else { return complete(.failure(.noData)) }
                 
                 // Movie info
                 for item in items {
@@ -68,11 +82,11 @@ struct Parser {
                     movies.append(movie)
                 }
                 DispatchQueue.main.async {
-                    complete(movies)
+                    return complete(.success(movies))
                 }
-
             } catch {
-               print("解析失败")
+                let error = ParseError.parseFailed
+                return complete(.failure(error))
             }
         }
     }
