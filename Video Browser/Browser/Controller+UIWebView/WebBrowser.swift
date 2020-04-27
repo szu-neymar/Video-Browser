@@ -30,10 +30,17 @@ class WebBrowser: UIViewController {
         }
         
         URLProtocol.registerClass(WKSniffer.self)
+        NotificationCenter.default.addObserver(self, selector: #selector(didSniffVideo(notification:)), name: .SniffVideoUrlNotification, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        webView.stopLoading()
     }
     
     deinit {
         URLProtocol.unregisterClass(WKSniffer.self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func initSubviews() {
@@ -50,11 +57,19 @@ class WebBrowser: UIViewController {
         webView.delegate = self
         webView.mediaPlaybackRequiresUserAction = false
         webView.snp.makeConstraints { (make) in
-                make.width.leading.equalToSuperview()
-                make.top.equalTo(44)
-                make.bottom.equalTo(tabBar.snp.top)
+            make.width.leading.equalToSuperview()
+            make.top.equalTo(44)
+            make.bottom.equalTo(tabBar.snp.top)
         }
     }
     
+    // MARK: - Actions
+    
+    @objc private func didSniffVideo(notification: Notification) {
+        if let url = notification.userInfo?["url"] as? String, !videoUrls.contains(url) {
+            videoUrls.append(url)
+            tabBar.sniffVideoCount = videoUrls.count
+        }
+    }
 }
 

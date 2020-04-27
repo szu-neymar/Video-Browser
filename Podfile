@@ -10,5 +10,8 @@ target 'Video Browser' do
   pod 'Moya', '~> 14.0'
   pod 'JXSegmentedView', '~> 1.0.6'
   pod 'SwiftSoup'
+  pod 'ZFPlayer', '~> 3.0'
+  pod 'ZFPlayer/ControlView', '~> 3.0'
+  pod 'ZFPlayer/AVPlayer', '~> 3.0'
 
 end

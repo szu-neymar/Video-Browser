@@ -22,6 +22,7 @@ class HomePageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "首页"
         view.backgroundColor = .white
         configTabBar()
         configSegmentedView()
@@ -30,13 +31,11 @@ class HomePageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = (segmentedView.selectedIndex == 0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
 

@@ -21,7 +21,11 @@ extension BrowserViewController: BrowserTabBarDelegate {
         webView.reload()
     }
     
-    func browserTabBar(_: BrowserTabBar, tapSearch button: UIButton) {
+    func browserTabBarTapSearch(_: BrowserTabBar) {
+        
+    }
+    
+    func browserTabBarTapSniffResult(_: BrowserTabBar) {
         
     }
     

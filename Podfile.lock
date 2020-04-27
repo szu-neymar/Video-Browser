@@ -10,6 +10,13 @@ PODS:
     - Alamofire (~> 5.0)
   - SnapKit (5.0.1)
   - SwiftSoup (2.3.1)
+  - ZFPlayer (3.3.1):
+    - ZFPlayer/Core (= 3.3.1)
+  - ZFPlayer/AVPlayer (3.3.1):
+    - ZFPlayer/Core
+  - ZFPlayer/ControlView (3.3.1):
+    - ZFPlayer/Core
+  - ZFPlayer/Core (3.3.1)
 
 DEPENDENCIES:
   - JXSegmentedView (~> 1.0.6)
@@ -17,6 +24,9 @@ DEPENDENCIES:
   - Moya (~> 14.0)
   - SnapKit (~> 5.0.0)
   - SwiftSoup
+  - ZFPlayer (~> 3.0)
+  - ZFPlayer/AVPlayer (~> 3.0)
+  - ZFPlayer/ControlView (~> 3.0)
 
 SPEC REPOS:
   trunk:
@@ -26,6 +36,7 @@ SPEC REPOS:
     - Moya
     - SnapKit
     - SwiftSoup
+    - ZFPlayer
 
 SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
@@ -34,7 +45,8 @@ SPEC CHECKSUMS:
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftSoup: e5af192bc99be8398d5f93e15ff6a3c80ba81de1
+  ZFPlayer: 8a6021a3c45e281f2abd24dca5c88915af770a7e
 
-PODFILE CHECKSUM: 2d1b4ea8efbdc55ca090426a25c18b11846f33b2
+PODFILE CHECKSUM: 3b51f8c0b329536367ff6e1b1946634c22ca17fe
 
 COCOAPODS: 1.8.3

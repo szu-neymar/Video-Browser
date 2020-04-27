@@ -12,7 +12,9 @@ extension WebBrowser: UIWebViewDelegate {
     
     func load(urlString: String) {
         if let url = URL(string: urlString) {
-            webView.loadRequest(URLRequest(url: url))
+            DispatchQueue.main.async {
+                self.webView.loadRequest(URLRequest(url: url))
+            }
         }
     }
     
@@ -25,6 +27,14 @@ extension WebBrowser: UIWebViewDelegate {
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
+        switch navigationType {
+        case .linkClicked, .backForward, .reload:
+            videoUrls = []
+            tabBar.sniffVideoCount = 0
+        default:
+            break
+        }
+        
         tabBar.searchItemTitle = request.url?.absoluteString
         return true
     }

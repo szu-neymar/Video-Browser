@@ -11,7 +11,8 @@ import UIKit
 protocol BrowserTabBarDelegate: class {
     func browserTabBar(_: BrowserTabBar, tapBack button: UIButton)
     func browserTabBar(_: BrowserTabBar, tapRefresh button: UIButton)
-    func browserTabBar(_: BrowserTabBar, tapSearch button: UIButton)
+    func browserTabBarTapSearch(_: BrowserTabBar)
+    func browserTabBarTapSniffResult(_: BrowserTabBar)
     func browserTabBar(_: BrowserTabBar, tapMenu button: UIButton)
     func browserTabBar(_: BrowserTabBar, tapHome button:UIButton)
 }
@@ -24,16 +25,25 @@ extension BrowserTabBarDelegate {
     func browserTabBar(_: BrowserTabBar, tapHome button:UIButton) {}
 }
 
-class BrowserTabBar: UIView {
+class BrowserTabBar: UIView, BrowserSearchTabItemDelegate {
     
     weak var delegate: BrowserTabBarDelegate?
     
     var searchItemTitle: String? {
         get {
-            return searchButton.title(for: .normal)
+            return searchButton.title
         }
         set {
-            searchButton.setTitle(newValue, for: .normal)
+            searchButton.title = newValue
+        }
+    }
+    
+    var sniffVideoCount: Int {
+        get {
+            return searchButton.sniffVideoCount
+        }
+        set {
+            searchButton.sniffVideoCount = newValue
         }
     }
     
@@ -51,14 +61,10 @@ class BrowserTabBar: UIView {
         return button
     }()
     
-    private lazy var searchButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .lightGray
-        button.setTitle("微信", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button.titleLabel?.lineBreakMode = .byTruncatingTail
-        button.addTarget(self, action: #selector(searchAction(_:)), for: .touchUpInside)
-        return button
+    private lazy var searchButton: BrowserSearchTabItem = {
+        let item = BrowserSearchTabItem()
+        item.delegate = self
+        return item
     }()
     
     private lazy var menuButton: UIButton = {
@@ -149,4 +155,12 @@ class BrowserTabBar: UIView {
         delegate?.browserTabBar(self, tapHome: sender)
     }
 
+    func searchItemDidTapSearch(_: BrowserSearchTabItem) {
+        delegate?.browserTabBarTapSearch(self)
+    }
+    
+    func searchItemDidTapSniffList(_: BrowserSearchTabItem) {
+        delegate?.browserTabBarTapSniffResult(self)
+    }
+    
 }

@@ -63,7 +63,6 @@ enum IgnoreExt: String, CaseIterable {
 extension Notification.Name {
     static let SniffUrlNotification = Notification.Name("WKSniffer.SniffUrlNotification")
     static let SniffVideoUrlNotification = Notification.Name("WKSniffer.SniffVideoUrlNotification")
-    static let SniffUrlKey = "url"
 }
 
 /**
@@ -87,13 +86,13 @@ class WKSniffer: URLProtocol {
         
         for ext in videoExts {
             if urlString.contains(ext) {
-                NotificationCenter.default.post(name: .SniffVideoUrlNotification, object: nil, userInfo: [Notification.Name.SniffUrlKey: urlString])
+                NotificationCenter.default.post(name: .SniffVideoUrlNotification, object: nil, userInfo: ["url": urlString])
                 print("sniff: " + urlString)
                 return false
             }
         }
         
-        NotificationCenter.default.post(name: .SniffUrlNotification, object: nil, userInfo: [Notification.Name.SniffUrlKey: urlString])
+        NotificationCenter.default.post(name: .SniffUrlNotification, object: nil, userInfo: ["url": urlString])
         
         return false
     }

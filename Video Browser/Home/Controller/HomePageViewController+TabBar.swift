@@ -51,6 +51,8 @@ extension HomePageViewController: HomeTabBarDelegate {
         switch type {
         case .home:
             segmentedView.selectItemAt(index: 0)
+        case .renctPages:
+            navigationController?.pushViewController(PlayerViewController(), animated: true)
         default:
             break
         }

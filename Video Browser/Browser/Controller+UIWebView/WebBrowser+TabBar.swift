@@ -21,8 +21,15 @@ extension WebBrowser: BrowserTabBarDelegate {
         webView.reload()
     }
     
-    func browserTabBar(_: BrowserTabBar, tapSearch button: UIButton) {
+    func browserTabBarTapSearch(_: BrowserTabBar) {
         
+    }
+    
+    func browserTabBarTapSniffResult(_: BrowserTabBar) {
+        if let url = videoUrls.last {
+            let playerController = PlayerViewController(urlString: url)
+            navigationController?.pushViewController(playerController, animated: true)
+        }
     }
     
     func browserTabBar(_: BrowserTabBar, tapMenu button: UIButton) {
