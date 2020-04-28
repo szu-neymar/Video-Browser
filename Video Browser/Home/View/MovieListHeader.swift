@@ -21,9 +21,11 @@ class MovieListHeader: UICollectionReusableView, FilterScrollViewDelegate {
     private var subScrollViews: [FilterScrollView] = []
     
     func config(with titlesArray: [[String]], allowMultiSelect: Bool) {
+        if subScrollViews.count > 0 {
+            return
+        }
         self.allowMultiSelect = allowMultiSelect
         subScrollViews.forEach { $0.removeFromSuperview() }
-        subScrollViews = []
         for (index, titles) in titlesArray.enumerated() {
             let filterScrollView = FilterScrollView(titles: titles)
             filterScrollView.tapDelegate = self

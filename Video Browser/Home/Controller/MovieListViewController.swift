@@ -17,10 +17,24 @@ class MovieListViewController: UIViewController {
     private var movieInfos: [MovieInfo] = []    // 视频列表
     private var currentPage = 1     // 最新加载的页码
     
-    var rule: String = ""
-    var urlString: String = ""
-    var baseUrl: String = ""
-
+    var channelModel: FYChannelModel!
+    
+    var headerModel: MovieListHeaderModel?
+    
+    convenience init(channelModel: FYChannelModel) {
+        self.init(nibName: nil, bundle: nil)
+        self.channelModel = channelModel
+        parseChannelInfos()
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configCollectionView()
@@ -32,7 +46,9 @@ class MovieListViewController: UIViewController {
         let itemWidth = (screenWidth - 4 * 10) / 3.0
         let itemHeight = itemWidth * 4.0 / 3.0 + 30
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
-        layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 95)
+        if let headerRows = headerModel?.headerTitles.count {
+            layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: CGFloat(30 * headerRows + 5))
+        }
         layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 10, right: 10)
         layout.scrollDirection = .vertical
         
@@ -57,14 +73,14 @@ class MovieListViewController: UIViewController {
     }
     
     @objc private func loadFirstPage() {
-        Parser.getMovies(from: urlString.firstPageUrl, rule: rule, baseUrl: baseUrl) { (result) in
+        Parser.getMovies(from: firstPageReplaced, rule: channelModel.htmlParseRule) { (result) in
             self.movieCollectionView.mj_header?.endRefreshing()
             switch result {
             case .success(let movies):
                 if movies.count > 0 {
                     self.movieInfos = movies
                     // 有些网页页码索引从 1 开始，对这种情况做一个简单兼容
-                    if self.urlString.firstPageUrl.elementsEqual(self.urlString.url(ofPage: 1)) {
+                    if self.firstPageReplaced.elementsEqual(self.getURLReplaced().url(ofPage: 1)) {
                         self.currentPage = 1
                     } else {
                         self.currentPage = 0
@@ -80,11 +96,11 @@ class MovieListViewController: UIViewController {
     }
     
     @objc private func loadMore() {
-        currentPage += 1
-        Parser.getMovies(from: urlString.url(ofPage: currentPage), rule: rule, baseUrl: baseUrl) { (result) in
+        Parser.getMovies(from: getURLReplaced().url(ofPage: currentPage + 1), rule: channelModel.htmlParseRule) { (result) in
             switch result {
             case .success(let movies):
                 if movies.count > 0 {
+                    self.currentPage += 1
                     self.movieInfos.append(contentsOf: movies)
                     self.movieCollectionView.reloadData()
                     self.movieCollectionView.mj_footer?.endRefreshing()
@@ -97,7 +113,7 @@ class MovieListViewController: UIViewController {
     }
     
     private func configFooterIfNeed() {
-        if urlString.canLoadMorePage {
+        if getURLReplaced().canLoadMorePage {
             let footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(self.loadMore))
             footer.isRefreshingTitleHidden = true
             self.movieCollectionView.mj_footer = footer
@@ -131,21 +147,13 @@ extension MovieListViewController: UICollectionViewDataSource, UICollectionViewD
         if kind == UICollectionView.elementKindSectionHeader{
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: NSStringFromClass(MovieListHeader.self), for: indexPath) as? MovieListHeader {
                 header.delegate = self
-                let titles1 = ["综合排序", "热播榜", "新上线"]
-                let titles2 = ["全部地区", "内地", "香港地区", "韩国", "美剧", "日本", "越南"]
-                let titles3 = ["2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012"]
-                header.config(with: [titles1, titles2, titles3], allowMultiSelect: true)
+                if let model = headerModel {
+                    header.config(with: model.headerTitles, allowMultiSelect: true)
+                }
                 return header
             }
         }
         return UICollectionReusableView()
-    }
-    
-}
-
-extension MovieListViewController: MovieListHeaderDelegate {
-    func movieListHeader(_: MovieListHeader, selctedAt row: Int, index: Int) {
-        
     }
     
 }

@@ -23,6 +23,8 @@
 		6D3594D0244D907900D767D1 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3594CF244D907900D767D1 /* HomePageViewController.swift */; };
 		6D3594D1244D912D00D767D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D3594C3244D8E7600D767D1 /* LaunchScreen.storyboard */; };
 		6D3594D8244EE1CE00D767D1 /* PrivateApiHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3594D7244EE1CE00D767D1 /* PrivateApiHelper.m */; };
+		6D6CD5002457C9220074E024 /* MovieListViewController+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6CD4FF2457C9220074E024 /* MovieListViewController+Header.swift */; };
+		6D6CD5022457D64B0074E024 /* MovieListHeaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6CD5012457D64B0074E024 /* MovieListHeaderModel.swift */; };
 		6D7A0B4A2455AE7700CC3500 /* CommonDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A0B492455AE7700CC3500 /* CommonDefine.swift */; };
 		6D7A0B4C245699A700CC3500 /* String+FYRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A0B4B245699A700CC3500 /* String+FYRule.swift */; };
 		6D7A0B4E2456B31400CC3500 /* String+Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A0B4D2456B31400CC3500 /* String+Index.swift */; };
@@ -60,6 +62,8 @@
 		6D3594D5244EE1CE00D767D1 /* Video Browser-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Video Browser-Bridging-Header.h"; sourceTree = "<group>"; };
 		6D3594D6244EE1CE00D767D1 /* PrivateApiHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrivateApiHelper.h; sourceTree = "<group>"; };
 		6D3594D7244EE1CE00D767D1 /* PrivateApiHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateApiHelper.m; sourceTree = "<group>"; };
+		6D6CD4FF2457C9220074E024 /* MovieListViewController+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieListViewController+Header.swift"; sourceTree = "<group>"; };
+		6D6CD5012457D64B0074E024 /* MovieListHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListHeaderModel.swift; sourceTree = "<group>"; };
 		6D7A0B492455AE7700CC3500 /* CommonDefine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDefine.swift; sourceTree = "<group>"; };
 		6D7A0B4B245699A700CC3500 /* String+FYRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+FYRule.swift"; sourceTree = "<group>"; };
 		6D7A0B4D2456B31400CC3500 /* String+Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Index.swift"; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 			children = (
 				6DCBC10524528B9300DFB229 /* FYRules.swift */,
 				6DCBC10724529B8100DFB229 /* MovieInfo.swift */,
+				6D6CD5012457D64B0074E024 /* MovieListHeaderModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				38143E2524508C6E00FAA4FA /* HomePageViewController+TabBar.swift */,
 				6DCBC10124516D1800DFB229 /* HomePageViewController+Segment.swift */,
 				6DE739AF2452EB0800825391 /* MovieListViewController.swift */,
+				6D6CD4FF2457C9220074E024 /* MovieListViewController+Header.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -433,6 +439,7 @@
 				38143E2624508C6E00FAA4FA /* HomePageViewController+TabBar.swift in Sources */,
 				6D3594D8244EE1CE00D767D1 /* PrivateApiHelper.m in Sources */,
 				6D3594B9244D8E7400D767D1 /* AppDelegate.swift in Sources */,
+				6D6CD5022457D64B0074E024 /* MovieListHeaderModel.swift in Sources */,
 				385F308624533A7B0024377B /* BrowserViewController+TabBar.swift in Sources */,
 				6DE739B02452EB0800825391 /* MovieListViewController.swift in Sources */,
 				6D7A0B4A2455AE7700CC3500 /* CommonDefine.swift in Sources */,
@@ -444,6 +451,7 @@
 				385F308424533A530024377B /* BrowserViewController.swift in Sources */,
 				6DCBC10B2452B2C200DFB229 /* Parser.swift in Sources */,
 				6D2A100C24558BA00034BC77 /* WebBrowser+TabBar.swift in Sources */,
+				6D6CD5002457C9220074E024 /* MovieListViewController+Header.swift in Sources */,
 				6DE739B524556D3900825391 /* WebBrowser.swift in Sources */,
 				6DCBC1002451341200DFB229 /* WKSniffer.swift in Sources */,
 				385F30902455CC550024377B /* BrowserSearchTabItem.swift in Sources */,

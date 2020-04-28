@@ -30,6 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return .portrait
     }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+       if let paste = UIPasteboard.general.string, paste.contains(FYRuleType.home.rawValue) {
+            
+        }
+    }
 
 
 }

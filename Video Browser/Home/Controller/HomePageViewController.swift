@@ -19,6 +19,8 @@ class HomePageViewController: UIViewController {
     lazy var listContainerView: JXSegmentedListContainerView! = {
         return JXSegmentedListContainerView(dataSource: self)
     }()
+    
+    private var channelModels: [FYChannelModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()

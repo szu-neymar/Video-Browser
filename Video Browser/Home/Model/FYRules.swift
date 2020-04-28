@@ -44,23 +44,111 @@ enum FYListStyle: String {
     case pic_3
 }
 
-struct FYHomeRule {
-    var title: String?
-    var group: String?
+struct FYSourceModel: Codable {
+    var title: String
+    var group: String = "首页"
     var titleColorHex: String?
-    var channelURL: String?
-    var listStyle: FYListStyle
+    
+    var url: String
+    var listStyle: String?
+    var className: String?
+    var classURL: String?
+    var areaName: String?
+    var areaURL: String?
+    var yearName: String?
+    var yearURL: String?
+    
+    var parseRule: String
+    var searchURL: String?
+    var searchParseRule: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case group
+        case titleColorHex = "titleColor"
+        case url
+        case listStyle = "col_type"
+        case className = "class_name"
+        case classURL = "class_url"
+        case areaName = "area_name"
+        case areaURL = "area_url"
+        case yearName = "year_name"
+        case yearURL = "year_url"
+        case parseRule = "find_rule"
+        case searchURL = "search_url"
+        case searchParseRule = "searchFind"
+    }
+}
+
+struct FYChannelModel {
+    var title: String
+    var group: String
+    var titleColorHex: String?
+    var channelURL: String  // 待替换关键词的 url
+    var firstPageUrl: String
+    var listStyle: FYListStyle = .movie_3
     
     var videoClasses: [String]?
-    var videoClassesReplace: [String]?
+    var videoClasseReplaces: [String]?
     var videoAreas: [String]?
-    var videoAreasReplace: [String]?
+    var videoAreaReplaces: [String]?
     var videoYears: [String]?
-    var videoYearsReplace: [String]?
+    var videoYearReplaces: [String]?
     
-    var htmlParseRule: String?
+    var htmlParseRule: String
     var searchUrl: String?
     var searchHtmlParseRule: String?
+    
+    init(with source: FYSourceModel) {
+        title = source.title
+        group = source.group
+        titleColorHex = source.titleColorHex
+        htmlParseRule = source.parseRule
+        searchUrl = source.searchURL
+        searchHtmlParseRule = source.searchParseRule
+        
+        if let index = source.url.range(of: ";")?.lowerBound {
+            channelURL = String(source.url[source.url.startIndex..<index])
+        } else {
+            channelURL = source.url
+        }
+        
+        channelURL = channelURL.urlWithoutFirstPageInfo
+        firstPageUrl = source.url.firstPageUrl
+        
+        var types: [String] = []
+        var typeReplaces: [String] = []
+        var areas: [String] = []
+        var areaReplaces: [String] = []
+        var years: [String] = []
+        var yearReplaces: [String] = []
+        
+        if let typeString = source.className, let typeReplaceString = source.classURL, typeString.count > 0, typeReplaceString.count > 0 {
+            types = typeString.components(separatedBy: "&")
+            typeReplaces = typeReplaceString.components(separatedBy: "&")
+        }
+        if let areaString = source.areaName, let areaReplaceString  = source.areaURL, areaString.count > 0, areaReplaceString.count > 0 {
+            areas = areaString.components(separatedBy: "&")
+            areaReplaces = areaReplaceString.components(separatedBy: "&")
+        }
+        if let yearString = source.yearName, let yearReplaceString = source.yearURL, yearString.count > 0, yearReplaceString.count > 0 {
+            years = yearString.components(separatedBy: "&")
+            yearReplaces = yearReplaceString.components(separatedBy: "&")
+        }
+        
+        if types.count > 0 && types.count == typeReplaces.count {
+            videoClasses = types
+            videoClasseReplaces = typeReplaces
+        }
+        if areas.count > 0 && areas.count == areaReplaces.count {
+            videoAreas = areas
+            videoAreaReplaces = areaReplaces
+        }
+        if years.count > 0 && years.count == yearReplaces.count {
+            videoYears = years
+            videoYearReplaces = yearReplaces
+        }
+    }
 }
 
 struct MovieInfoSelector {

@@ -27,13 +27,15 @@ typealias ParseMovieComplete =  (Result<[MovieInfo], ParseError>) -> Void
 
 struct Parser {
     
+    /**
+     解析远程 HTML 获取电影列表信息
+     */
     static func getMovies(from urlString: String,
                                     rule: String,
-                                 baseUrl: String = "",
                                 complete: @escaping ParseMovieComplete) {
         var movies: [MovieInfo] = []
         movies = []
-        guard let url = URL(string: urlString) else {
+        guard let url = URL(string: urlString), let baseUrl = urlString.baseUrl else {
             print("\(urlString) is not a url")
             return complete(.failure(.parseFailed))
         }
@@ -89,6 +91,14 @@ struct Parser {
                 return complete(.failure(error))
             }
         }
+    }
+    
+    static func getDictString(from paste: String, ruleType: FYRuleType) -> String? {
+        if let index = paste.range(of: ruleType.rawValue)?.upperBound {
+            return String(paste[index..<paste.endIndex])
+        }
+        
+        return nil
     }
     
     // MARK: - Private

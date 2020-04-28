@@ -61,29 +61,24 @@ extension HomePageViewController: JXSegmentedListContainerViewDataSource {
     }
     
     func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        let movieListController = MovieListViewController()
+        var movieListController = MovieListViewController()
 
         switch index {
-        case 0:
-            movieListController.rule = ".stui-vodlist&&li;.title&&Text;a&&data-original;.pic-text&&Text;a&&href"
-            movieListController.urlString = "http://huubaa.com/lists/2_fypage.html[firstPage=http://huubaa.com/lists/2_1.html]"
-            movieListController.baseUrl = "http://huubaa.com"
-        case 1:
-            movieListController.rule = ".tubiao&&.zu;a,1&&Text;img&&src;.kebo&&Text;a&&href"
-            movieListController.urlString = "https://www.laodouban.com/dianshiju/0"
-            movieListController.baseUrl = "https://www.laodouban.com"
-        case 2:
-            movieListController.urlString = "https://www.shenma4480.com/type/dianying-0/"
-            movieListController.baseUrl = "https://www.shenma4480.com"
-            movieListController.rule = "body&&.stui-vodlist__item;a&&title;a&&mip-img&&src;.pic-text&&Text;a&&href"
-        case 3:
-            movieListController.urlString = "https://www.novipnoad.com/movie/page/0"
-            movieListController.baseUrl = "https://www.novipnoad.com"
-            movieListController.rule = ".post_ajax_tm&&.row&&.col-md-3;.item-head&&a&&Text;img&&data-original;.item-content&&Text;.item-thumbnail&&a&&href"
+//        case 0:
+//            
+//            break
         default:
-            movieListController.rule = ".figures_list&&li;.figure_title&&Text;.figure&&style;.mask_txt&&Text!更新至;a&&href"
-            movieListController.urlString =  "http://www.81ju.cn/?m=vod-type-id-1.html"
-            movieListController.baseUrl = "http://www.81ju.cn"
+            let copy = """
+            海阔视界规则分享，当前分享的是：首页频道￥home_rule￥{"firstHeader":"class","title":"菲菲影视","url":"https://lm.didibib.ml/index.php/vod/type/id/fyAll/page/fypage.html","col_type":"movie_3","class_name":"电影&连续剧&综艺&动漫","class_url":"1&2&3&4","area_name":"","area_url":"","year_name":"","year_url":"","find_rule":".stui-vodlist&&li;h4&&Text;.lazyload&&data-original;.pic-text&&Text;a&&href","search_url":"https://lm.didibib.ml/index.php/vod/search.html?wd=**","titleColor":"#f20c00","group":"③影视","searchFind":".stui-vodlist&&li;h4&&a&&Text;h4&&a&&href;.pic-text&&Text;*;.lazyload&&data-original"}
+            """
+            if let str = Parser.getDictString(from: copy, ruleType: .home), let dict = str.dictValue, let data = try? JSONSerialization.data(withJSONObject: dict, options: []) {
+                if let model = try? JSONDecoder().decode(FYSourceModel.self, from: data) {
+                    let channelModel = FYChannelModel(with: model)
+                    movieListController = MovieListViewController(channelModel: channelModel)
+                }
+                print(dict)
+            }
+            
         }
         return movieListController
     }
