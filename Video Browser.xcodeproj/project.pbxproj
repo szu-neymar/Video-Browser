@@ -144,9 +144,17 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		38FE39F52459B05C008F2531 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		6D1AF2A324559172001007EC /* Player */ = {
 			isa = PBXGroup;
 			children = (
+				38FE39F52459B05C008F2531 /* View */,
 				6D1AF2A42455918B001007EC /* PlayerViewController.swift */,
 			);
 			path = Player;

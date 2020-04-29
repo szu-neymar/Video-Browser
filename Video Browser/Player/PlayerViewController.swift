@@ -70,6 +70,15 @@ class PlayerViewController: UIViewController {
         
         containerView.backgroundColor = .black
         player = ZFPlayerController(playerManager: playerManager, containerView: containerView)
+        controlView.prepareShowLoading = true
+        controlView.prepareShowControlView = true
+        controlView.autoFadeTimeInterval = 0.32
+        controlView.effectViewShow = false
+        controlView.fastViewAnimated = true
+        controlView.landScapeControlView.playOrPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+        controlView.landScapeControlView.playOrPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .selected)
+        controlView.landScapeControlView.lockBtn.setImage(#imageLiteral(resourceName: "unlock"), for: .normal)
+        controlView.landScapeControlView.lockBtn.setImage(#imageLiteral(resourceName: "lock"), for: .selected)
         player.controlView = controlView
         player.isStatusBarHidden = false
         
@@ -83,6 +92,7 @@ class PlayerViewController: UIViewController {
             if let appDelagate = UIApplication.shared.delegate as? AppDelegate {
                 appDelagate.allowOrentitaionRotation = isFullScreen
                 self?.homeIndicatorHidden = isFullScreen
+                self?.controlView.bottomPgrogress.alpha = isFullScreen ? 0 : 1
                 self?.setNeedsUpdateOfHomeIndicatorAutoHidden()
                 self?.setNeedsStatusBarAppearanceUpdate()
                 if !isFullScreen {
