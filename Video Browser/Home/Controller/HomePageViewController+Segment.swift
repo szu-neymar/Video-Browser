@@ -12,7 +12,7 @@ import JXSegmentedView
 extension HomePageViewController: JXSegmentedListContainerViewDataSource {
     
     func configSegmentedView() {
-        let titles = ["首页", "视频", "腾讯视频", "爱奇艺", "芒果TV", "优酷视频", "爱土豆", "抖音", "快手"]
+        let titles = channelModels.map { $0.title }
         segmentedDataSource = JXSegmentedTitleDataSource()
         segmentedDataSource?.isTitleColorGradientEnabled = true
         segmentedDataSource?.titles = titles
@@ -61,25 +61,9 @@ extension HomePageViewController: JXSegmentedListContainerViewDataSource {
     }
     
     func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        var movieListController = MovieListViewController()
-
-        switch index {
-//        case 0:
-//            
-//            break
-        default:
-            let copy = """
-            海阔视界规则分享，当前分享的是：首页频道￥home_rule￥{"firstHeader":"class","title":"菲菲影视","url":"https://lm.didibib.ml/index.php/vod/type/id/fyAll/page/fypage.html","col_type":"movie_3","class_name":"电影&连续剧&综艺&动漫","class_url":"1&2&3&4","area_name":"","area_url":"","year_name":"","year_url":"","find_rule":".stui-vodlist&&li;h4&&Text;.lazyload&&data-original;.pic-text&&Text;a&&href","search_url":"https://lm.didibib.ml/index.php/vod/search.html?wd=**","titleColor":"#f20c00","group":"③影视","searchFind":".stui-vodlist&&li;h4&&a&&Text;h4&&a&&href;.pic-text&&Text;*;.lazyload&&data-original"}
-            """
-            if let str = Parser.getDictString(from: copy, ruleType: .home), let dict = str.dictValue, let data = try? JSONSerialization.data(withJSONObject: dict, options: []) {
-                if let model = try? JSONDecoder().decode(FYSourceModel.self, from: data) {
-                    let channelModel = FYChannelModel(with: model)
-                    movieListController = MovieListViewController(channelModel: channelModel)
-                }
-                print(dict)
-            }
-            
+        if index < channelModels.count {
+            return MovieListViewController(channelModel: channelModels[index])
         }
-        return movieListController
+        return MovieListViewController()
     }
 }

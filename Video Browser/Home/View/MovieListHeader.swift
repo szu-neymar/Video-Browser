@@ -16,15 +16,15 @@ protocol MovieListHeaderDelegate: class {
 class MovieListHeader: UICollectionReusableView, FilterScrollViewDelegate {
     
     weak var delegate: MovieListHeaderDelegate?
-    private var allowMultiSelect = false
+    private var allowsMultiSelected = false
     
     private var subScrollViews: [FilterScrollView] = []
     
-    func config(with titlesArray: [[String]], allowMultiSelect: Bool) {
+    func config(with titlesArray: [[String]], allowsMultiSelected: Bool) {
         if subScrollViews.count > 0 {
             return
         }
-        self.allowMultiSelect = allowMultiSelect
+        self.allowsMultiSelected = allowsMultiSelected
         subScrollViews.forEach { $0.removeFromSuperview() }
         for (index, titles) in titlesArray.enumerated() {
             let filterScrollView = FilterScrollView(titles: titles)
@@ -39,7 +39,7 @@ class MovieListHeader: UICollectionReusableView, FilterScrollViewDelegate {
             }
         }
         
-        if allowMultiSelect {
+        if allowsMultiSelected {
             subScrollViews.forEach{ $0.select(at: 0) }
         } else if let firstScrollView = subScrollViews.first {
             firstScrollView.select(at: 0)
@@ -48,19 +48,22 @@ class MovieListHeader: UICollectionReusableView, FilterScrollViewDelegate {
     
     // MARK: - FilterScrollViewDelegate
     
-    func filterScrollView(_ filterScrollView: FilterScrollView, didSelected index: Int, label: UILabel) {
-        if !allowMultiSelect {
+    func filterScrollView(_ filterScrollView: FilterScrollView, didSelected index: Int) {
+        if !allowsMultiSelected {
             subScrollViews.forEach { $0.deselct() }
         }
         filterScrollView.deselct()
         filterScrollView.select(at: index)
+        if let row = subScrollViews.firstIndex(of: filterScrollView) {
+            delegate?.movieListHeader(self, selctedAt: row, index: index)
+        }
     }
 }
 
 // MARK: - FilterScrollView
 
 protocol FilterScrollViewDelegate: class {
-    func filterScrollView(_ filterScrollView: FilterScrollView, didSelected index: Int, label: UILabel)
+    func filterScrollView(_ filterScrollView: FilterScrollView, didSelected index: Int)
 }
 
 class FilterScrollView: UIScrollView {
@@ -149,18 +152,16 @@ class FilterScrollView: UIScrollView {
     
     @objc private func tapAction(_ gesture: UITapGestureRecognizer) {
         let point = gesture.location(in: self)
-        var tapLabel: UILabel?
         var tapIndex: Int?
         for (index, label) in labels.enumerated() {
             let subFrame = CGRect(x: label.x - 13, y: label.y, width: label.width + 26, height: label.height)
             if subFrame.contains(point) {
-                tapLabel = label
                 tapIndex = index
                 break
             }
         }
-        if let label = tapLabel , let index = tapIndex {
-            tapDelegate?.filterScrollView(self, didSelected: index, label: label)
+        if let index = tapIndex {
+            tapDelegate?.filterScrollView(self, didSelected: index)
         }
     }
 }

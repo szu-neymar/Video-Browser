@@ -12,7 +12,7 @@ import MJRefresh
 
 class MovieListViewController: UIViewController {
     
-    private var movieCollectionView: UICollectionView!
+    var movieCollectionView: UICollectionView!
     
     private var movieInfos: [MovieInfo] = []    // 视频列表
     private var currentPage = 1     // 最新加载的页码
@@ -148,7 +148,7 @@ extension MovieListViewController: UICollectionViewDataSource, UICollectionViewD
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: NSStringFromClass(MovieListHeader.self), for: indexPath) as? MovieListHeader {
                 header.delegate = self
                 if let model = headerModel {
-                    header.config(with: model.headerTitles, allowMultiSelect: true)
+                    header.config(with: model.headerTitles, allowsMultiSelected: channelModel.allowsMultiSelected)
                 }
                 return header
             }

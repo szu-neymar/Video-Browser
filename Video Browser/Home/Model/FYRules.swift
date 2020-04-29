@@ -113,8 +113,8 @@ struct FYChannelModel {
             channelURL = source.url
         }
         
+        firstPageUrl = channelURL.firstPageUrl
         channelURL = channelURL.urlWithoutFirstPageInfo
-        firstPageUrl = source.url.firstPageUrl
         
         var types: [String] = []
         var typeReplaces: [String] = []
@@ -125,15 +125,33 @@ struct FYChannelModel {
         
         if let typeString = source.className, let typeReplaceString = source.classURL, typeString.count > 0, typeReplaceString.count > 0 {
             types = typeString.components(separatedBy: "&")
-            typeReplaces = typeReplaceString.components(separatedBy: "&")
+            var replaces = typeReplaceString.components(separatedBy: "&")
+            for (index, replace) in replaces.enumerated() {
+                if replace.includeChinese {
+                    replaces[index] = replace.urlEncoded()
+                }
+            }
+            typeReplaces = replaces
         }
         if let areaString = source.areaName, let areaReplaceString  = source.areaURL, areaString.count > 0, areaReplaceString.count > 0 {
             areas = areaString.components(separatedBy: "&")
-            areaReplaces = areaReplaceString.components(separatedBy: "&")
+            var replaces = areaReplaceString.components(separatedBy: "&")
+            for (index, replace) in replaces.enumerated() {
+                if replace.includeChinese {
+                    replaces[index] = replace.urlEncoded()
+                }
+            }
+            areaReplaces = replaces
         }
         if let yearString = source.yearName, let yearReplaceString = source.yearURL, yearString.count > 0, yearReplaceString.count > 0 {
             years = yearString.components(separatedBy: "&")
-            yearReplaces = yearReplaceString.components(separatedBy: "&")
+            var replaces = yearReplaceString.components(separatedBy: "&")
+            for (index, replace) in replaces.enumerated() {
+                if replace.includeChinese {
+                    replaces[index] = replace.urlEncoded()
+                }
+            }
+            yearReplaces = replaces
         }
         
         if types.count > 0 && types.count == typeReplaces.count {
@@ -148,6 +166,12 @@ struct FYChannelModel {
             videoYears = years
             videoYearReplaces = yearReplaces
         }
+    }
+}
+
+extension FYChannelModel {
+    var allowsMultiSelected: Bool {
+        return !channelURL.contains(FYURLField.all.rawValue)
     }
 }
 

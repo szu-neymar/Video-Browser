@@ -39,7 +39,7 @@ extension MovieListViewController {
         
         guard headerTitles.count > 0 else { return }
             
-        if channelModel.channelURL.contains(FYURLField.all.rawValue) {
+        if !channelModel.allowsMultiSelected {
             headerReplaceKeys = [FYURLField.all.rawValue]
             selectedIndexs = [ChannelHeaderIndex(row: 0, col: 0)]
         } else {
@@ -87,7 +87,17 @@ extension MovieListViewController {
 
 extension MovieListViewController: MovieListHeaderDelegate {
     func movieListHeader(_: MovieListHeader, selctedAt row: Int, index: Int) {
-        
+        if channelModel.allowsMultiSelected {
+            if let indexs = headerModel?.seletedHeaderIndexs, row < indexs.count, indexs[row].col != index {
+                headerModel?.seletedHeaderIndexs[row] = ChannelHeaderIndex(row: row, col: index)
+                movieCollectionView.mj_header?.beginRefreshing()
+            }
+        } else {
+            if let lastSelectedIndex = headerModel?.seletedHeaderIndexs.first, (lastSelectedIndex.row != row || lastSelectedIndex.col != index) {
+                headerModel?.seletedHeaderIndexs[0] = ChannelHeaderIndex(row: 0, col: index)
+                movieCollectionView.mj_header?.beginRefreshing()
+            }
+        }
     }
     
 }
