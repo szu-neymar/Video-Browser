@@ -32,9 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-       if let paste = UIPasteboard.general.string, paste.contains(FYRuleType.home.rawValue) {
-            
-        }
+//        if let paste = UIPasteboard.general.string, paste.contains(FYRuleType.home.rawValue) {
+//            
+//        }
     }
 
 

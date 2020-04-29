@@ -62,25 +62,24 @@ extension MovieListViewController {
         return nil
     }
     
-    func getURLReplaced() -> String {
-        var url = channelModel.channelURL
-        if let model = headerModel {
-            for index in model.seletedHeaderIndexs {
-                url = url.replacingOccurrences(of: model.fyReplaceKeys[index.row], with: model.headerReplaceValues[index.row][index.col])
-            }
-        }
-        
-        return url
+    var channelURLReplaced: String {
+        return getURLReplaced(with: channelModel.channelURL)
     }
     
     var firstPageReplaced: String {
-        var url = channelModel.firstPageUrl
+        return getURLReplaced(with: channelModel.firstPageUrl)
+        
+    }
+    
+    private func getURLReplaced(with url: String) -> String {
+        var res = url
         if let model = headerModel {
             for index in model.seletedHeaderIndexs {
-                url = url.replacingOccurrences(of: model.fyReplaceKeys[index.row], with: model.headerReplaceValues[index.row][index.col])
+                let row = channelModel.allowsMultiSelected ? index.row : 0
+                res = res.replacingOccurrences(of: model.fyReplaceKeys[row], with: model.headerReplaceValues[index.row][index.col])
             }
         }
-        return url
+        return res
     }
 }
 
@@ -94,7 +93,7 @@ extension MovieListViewController: MovieListHeaderDelegate {
             }
         } else {
             if let lastSelectedIndex = headerModel?.seletedHeaderIndexs.first, (lastSelectedIndex.row != row || lastSelectedIndex.col != index) {
-                headerModel?.seletedHeaderIndexs[0] = ChannelHeaderIndex(row: 0, col: index)
+                headerModel?.seletedHeaderIndexs[0] = ChannelHeaderIndex(row: row, col: index)
                 movieCollectionView.mj_header?.beginRefreshing()
             }
         }

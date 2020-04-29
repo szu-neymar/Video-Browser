@@ -145,7 +145,7 @@ struct Parser {
     }
     
     private static func getImageUrl(from content: String?) -> String? {
-        if let originContent = content, originContent.contains("background-image: url") {
+        if let originContent = content, originContent.contains("url(") {
             if let start = originContent.firstIndex(of: "("), let end = originContent.lastIndex(of: ")") {
                 return String(originContent[originContent.index(start, offsetBy: 1)..<end])
             }

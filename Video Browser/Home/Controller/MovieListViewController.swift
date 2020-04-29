@@ -80,7 +80,7 @@ class MovieListViewController: UIViewController {
                 if movies.count > 0 {
                     self.movieInfos = movies
                     // 有些网页页码索引从 1 开始，对这种情况做一个简单兼容
-                    if self.firstPageReplaced.elementsEqual(self.getURLReplaced().url(ofPage: 1)) {
+                    if self.firstPageReplaced.elementsEqual(self.channelURLReplaced.url(ofPage: 1)) {
                         self.currentPage = 1
                     } else {
                         self.currentPage = 0
@@ -96,7 +96,7 @@ class MovieListViewController: UIViewController {
     }
     
     @objc private func loadMore() {
-        Parser.getMovies(from: getURLReplaced().url(ofPage: currentPage + 1), rule: channelModel.htmlParseRule) { (result) in
+        Parser.getMovies(from: channelURLReplaced.url(ofPage: currentPage + 1), rule: channelModel.htmlParseRule) { (result) in
             switch result {
             case .success(let movies):
                 if movies.count > 0 {
@@ -113,7 +113,7 @@ class MovieListViewController: UIViewController {
     }
     
     private func configFooterIfNeed() {
-        if getURLReplaced().canLoadMorePage {
+        if channelURLReplaced.canLoadMorePage {
             let footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(self.loadMore))
             footer.isRefreshingTitleHidden = true
             self.movieCollectionView.mj_footer = footer
