@@ -27,7 +27,8 @@ extension WebBrowser: BrowserTabBarDelegate {
     
     func browserTabBarTapSniffResult(_: BrowserTabBar) {
         if let url = videoUrls.last {
-            let playerController = PlayerViewController(urlString: url)
+            let title = webView.stringByEvaluatingJavaScript(from: "document.title")
+            let playerController = PlayerViewController(urlString: url, movieTitle: title)
             navigationController?.pushViewController(playerController, animated: true)
         }
     }

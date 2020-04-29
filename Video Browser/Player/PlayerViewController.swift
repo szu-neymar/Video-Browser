@@ -12,6 +12,7 @@ import ZFPlayer
 class PlayerViewController: UIViewController {
     
     private var urlString: String = ""
+    private var movieTitle: String?
     
     private var player: ZFPlayerController!
     private let playerManager = ZFAVPlayerManager()
@@ -41,9 +42,10 @@ class PlayerViewController: UIViewController {
         return true
     }
     
-    convenience init(urlString: String) {
+    convenience init(urlString: String, movieTitle: String?) {
         self.init(nibName: nil, bundle: nil)
         self.urlString = urlString
+        self.movieTitle = movieTitle
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -79,12 +81,14 @@ class PlayerViewController: UIViewController {
         controlView.landScapeControlView.playOrPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .selected)
         controlView.landScapeControlView.lockBtn.setImage(#imageLiteral(resourceName: "unlock"), for: .normal)
         controlView.landScapeControlView.lockBtn.setImage(#imageLiteral(resourceName: "lock"), for: .selected)
+        controlView.landScapeControlView.titleLabel.text = movieTitle
+        controlView.portraitControlView.titleLabel.text = movieTitle
         player.controlView = controlView
         player.isStatusBarHidden = false
         
         containerView.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview()
-            make.top.equalTo(88)
+            make.top.equalTo(44)
             make.height.equalTo(self.view.snp.width).multipliedBy(9 / 16.0)
         }
         
